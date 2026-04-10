@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trening Mentalny dla Sportowców — Besler</title>
+  <meta name="description" content="Coaching mentalny dla sportowców. Rozwijaj siłę mentalną, rywalizuj na najwyższym poziomie. Certyfikowany trener mentalny.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">BESLER<span>.</span></a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Strona Główna</a></li>
+        <li><a href="trading.html" data-i18n="nav.trading">Trading</a></li>
+        <li><a href="athletes.html" class="active" data-i18n="nav.athletes">Sportowcy</a></li>
+        <li><a href="oferta.html" data-i18n="nav.oferta">Oferta</a></li>
+        <li><a href="index.html#about" data-i18n="nav.about">O Mnie</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Kontakt</a></li>
+        <li>
+          <div class="lang-toggle">
+            <button class="lang-btn active" data-lang="pl">PL</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+          </div>
+        </li>
+      </ul>
+
+      <button class="nav-hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO — FULL SCREEN SCROLL FX ===== -->
+  <style>
+    .fx-pinned{height:100vh;width:100%;overflow:hidden;position:relative;background:#0A0A0A;z-index:1}
+    .fx-bgs{position:absolute;inset:0;background:#0A0A0A;z-index:1}
+    .fx-bg{position:absolute;inset:0}
+    .fx-bg-img{position:absolute;inset:-10% 0 -10% 0;width:100%;height:120%;object-fit:cover;filter:brightness(0.85) saturate(0.9);opacity:0;will-change:transform,opacity}
+    .fx-bg-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.18) 0%,rgba(0,12,6,0.32) 50%,rgba(0,0,0,0.5) 100%)}
+    .fx-grid{display:grid;grid-template-rows:auto 1fr auto;position:relative;height:100%;z-index:2;padding:0 2rem}
+    .fx-header{align-self:start;padding-top:max(5vh,3rem);font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,7vw,7rem);line-height:.88;text-align:center;color:rgba(245,245,245,0.15);text-transform:uppercase;letter-spacing:.06em;pointer-events:none;user-select:none}
+    .fx-header div{display:block}
+    .fx-content{position:absolute;inset:0;display:grid;grid-template-columns:.8fr 2fr .8fr;align-items:center;height:100%;padding:0 2rem;z-index:3}
+    .fx-left,.fx-right{height:55vh;overflow:hidden;display:grid;align-content:center}
+    .fx-left{justify-items:start}
+    .fx-right{justify-items:end;text-align:right}
+    .fx-track{will-change:transform}
+    .fx-item{color:rgba(245,245,245,0.92);font-family:'Inter',sans-serif;font-weight:700;letter-spacing:.04em;line-height:1;margin:6px 0;opacity:.3;position:relative;font-size:clamp(.85rem,2vw,1.5rem);text-transform:uppercase;user-select:none;cursor:pointer;transition:none}
+    .fx-left-item.active{opacity:1;padding-left:18px}
+    .fx-right-item.active{opacity:1;padding-right:18px}
+    .fx-left-item.active::before,.fx-right-item.active::after{content:"";position:absolute;top:50%;transform:translateY(-50%);width:7px;height:7px;background:#D4A843;border-radius:50%}
+    .fx-left-item.active::before{left:0}
+    .fx-right-item.active::after{right:0}
+    .fx-center{display:grid;place-items:center;text-align:center;height:55vh;position:relative}
+    .fx-featured{position:absolute;opacity:0;visibility:hidden;width:100%;display:grid;place-items:center}
+    .fx-featured.active{opacity:1;visibility:visible}
+    .fx-featured-title{margin:0;color:rgba(245,245,245,0.94);font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:.05em;font-size:clamp(2.8rem,9vw,7.5rem);line-height:.95;text-transform:uppercase}
+    .fx-word-mask{display:inline-block;overflow:hidden;vertical-align:middle}
+    .fx-word{display:inline-block;vertical-align:middle}
+    .fx-footer{align-self:end;padding-bottom:max(4vh,2rem);text-align:center;z-index:3;position:relative}
+    .fx-footer-label{color:rgba(212,168,67,0.7);font-family:'Inter',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem}
+    .fx-footer-title{color:rgba(245,245,245,0.88);font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,4vw,3.5rem);letter-spacing:.08em;line-height:.95;text-transform:uppercase}
+    .fx-progress{width:180px;height:2px;margin:1.2rem auto 0;background:rgba(245,245,245,0.15);position:relative}
+    .fx-progress-fill{position:absolute;inset:0 auto 0 0;width:0%;background:#D4A843;height:100%;transition:width .4s cubic-bezier(.4,0,.2,1)}
+    .fx-progress-numbers{position:absolute;inset:auto 0 calc(100% + 5px) 0;display:flex;justify-content:space-between;font-size:.7rem;color:rgba(245,245,245,0.5);font-family:'Inter',sans-serif;font-weight:500;letter-spacing:.05em}
+    .fx-scroll-cta{position:absolute;bottom:max(3vh,1.5rem);left:50%;transform:translateX(-50%);z-index:4;display:flex;gap:1rem;opacity:0;animation:fxFadeUp .8s 1.2s ease forwards}
+    @keyframes fxFadeUp{to{opacity:1;transform:translateX(-50%) translateY(0)}}
+    @keyframes fxFadeUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+    @media(max-width:900px){
+      .fx-content{grid-template-columns:1fr;row-gap:1vh;place-items:center}
+      .fx-left,.fx-right,.fx-center{height:auto}
+      .fx-left,.fx-right{justify-items:center;text-align:center}
+      .fx-track{transform:none!important}
+      .fx-featured-title{font-size:clamp(2.5rem,14vw,5rem)}
+      .fx-header{font-size:clamp(1.6rem,10vw,5rem)}
+      .fx-left,.fx-right{display:none}
+    }
+  </style>
+
+  <div class="fx-pinned" id="fxPinned" aria-label="Sportowa droga Pawła Beslera">
+    <!-- Backgrounds -->
+    <div class="fx-bgs" aria-hidden="true">
+      <div class="fx-bg">
+        <img src="images/sport/Zrzut ekranu 2026-04-09 234111.png" alt="" class="fx-bg-img">
+        <div class="fx-bg-overlay"></div>
+      </div>
+      <div class="fx-bg">
+        <img src="images/sport/5f33df0a-1b73-4b1b-9e93-959fc28389a3 (1).JPG" alt="" class="fx-bg-img">
+        <div class="fx-bg-overlay"></div>
+      </div>
+      <div class="fx-bg">
+        <img src="images/sport/f1a687ae-c9d0-4f35-9878-eb44fddfe1c8 (1).JPG" alt="" class="fx-bg-img">
+        <div class="fx-bg-overlay"></div>
+      </div>
+      <div class="fx-bg">
+        <img src="images/sport/05b80a34-ce9a-4615-9380-3f2094a3acb7.JPG" alt="" class="fx-bg-img">
+        <div class="fx-bg-overlay"></div>
+      </div>
+      <div class="fx-bg">
+        <img src="images/sport/IMG_5808.jpeg" alt="" class="fx-bg-img">
+        <div class="fx-bg-overlay"></div>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="fx-grid">
+      <div class="fx-header">
+        <div>Sportowa</div>
+        <div>Droga</div>
+      </div>
+
+      <div class="fx-content">
+        <!-- Left labels -->
+        <div class="fx-left" role="list">
+          <div class="fx-track" id="fxLeftTrack">
+            <div class="fx-item fx-left-item active" role="button" tabindex="0">Trening</div>
+            <div class="fx-item fx-left-item" role="button" tabindex="0">Turniej</div>
+            <div class="fx-item fx-left-item" role="button" tabindex="0">Puchar</div>
+            <div class="fx-item fx-left-item" role="button" tabindex="0">Braterstwo</div>
+            <div class="fx-item fx-left-item" role="button" tabindex="0">Umysł</div>
+          </div>
+        </div>
+
+        <!-- Center titles -->
+        <div class="fx-center">
+          <div class="fx-featured active">
+            <h2 class="fx-featured-title">
+              <span class="fx-word-mask"><span class="fx-word">Na</span>&nbsp;</span><span class="fx-word-mask"><span class="fx-word">Boisku</span></span>
+            </h2>
+          </div>
+          <div class="fx-featured">
+            <h2 class="fx-featured-title">
+              <span class="fx-word-mask"><span class="fx-word">Beach</span>&nbsp;</span><span class="fx-word-mask"><span class="fx-word">Rugby</span></span>
+            </h2>
+          </div>
+          <div class="fx-featured">
+            <h2 class="fx-featured-title">
+              <span class="fx-word-mask"><span class="fx-word">Zwycięstwo</span></span>
+            </h2>
+          </div>
+          <div class="fx-featured">
+            <h2 class="fx-featured-title">
+              <span class="fx-word-mask"><span class="fx-word">Drużyna</span></span>
+            </h2>
+          </div>
+          <div class="fx-featured">
+            <h2 class="fx-featured-title">
+              <span class="fx-word-mask"><span class="fx-word">Siła</span>&nbsp;</span><span class="fx-word-mask"><span class="fx-word">Umysłu</span></span>
+            </h2>
+          </div>
+        </div>
+
+        <!-- Right labels -->
+        <div class="fx-right" role="list">
+          <div class="fx-track" id="fxRightTrack">
+            <div class="fx-item fx-right-item active" role="button" tabindex="0">Pasja</div>
+            <div class="fx-item fx-right-item" role="button" tabindex="0">Sopot</div>
+            <div class="fx-item fx-right-item" role="button" tabindex="0">Duma</div>
+            <div class="fx-item fx-right-item" role="button" tabindex="0">Medale</div>
+            <div class="fx-item fx-right-item" role="button" tabindex="0">Coaching</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-footer">
+        <div class="fx-footer-label">Rugby Klub</div>
+        <div class="fx-footer-title">Lechia Gdańsk</div>
+        <div class="fx-progress">
+          <div class="fx-progress-numbers">
+            <span id="fxCurrentNum">01</span>
+            <span>05</span>
+          </div>
+          <div class="fx-progress-fill" id="fxProgressFill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PROBLEM / CHALLENGES ===== -->
+  <section class="section section-dark" id="problem">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="label" data-i18n="athletes.problem.label">Wyzwanie</span>
+        <h2 style="color:var(--white);" data-i18n="athletes.problem.title">Mentalne bariery w sporcie</h2>
+        <p data-i18n="athletes.problem.subtitle">Talent i trening fizyczny to fundament. Ale to umysł decyduje o tym, kto wygrywa.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card fade-up">
+          <div class="icon">&#127942;</div>
+          <h3 data-i18n="athletes.problem.f1.title">Presja wyniku</h3>
+          <p data-i18n="athletes.problem.f1.desc">Stres przed ważnymi zawodami paraliżuje i nie pozwala pokazać pełnego potencjału.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="icon">&#9888;</div>
+          <h3 data-i18n="athletes.problem.f2.title">Strach przed porażką</h3>
+          <p data-i18n="athletes.problem.f2.desc">Obawa przed przegraną sprawia, że grasz zachowawczo zamiast na pełnych obrotach.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="icon">&#127919;</div>
+          <h3 data-i18n="athletes.problem.f3.title">Brak koncentracji</h3>
+          <p data-i18n="athletes.problem.f3.desc">Myśli o wyniku zamiast o procesie — trudno utrzymać skupienie w kluczowych momentach.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="icon">&#129657;</div>
+          <h3 data-i18n="athletes.problem.f4.title">Powrót po kontuzji</h3>
+          <p data-i18n="athletes.problem.f4.desc">Mentalny blok po kontuzji nie pozwala wrócić do pełnej dyspozycji.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="icon">&#128164;</div>
+          <h3 data-i18n="athletes.problem.f5.title">Wypalenie sportowe</h3>
+          <p data-i18n="athletes.problem.f5.desc">Ciągła presja, monotonia treningu i brak motywacji prowadzą do wypalenia.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="icon">&#129309;</div>
+          <h3 data-i18n="athletes.problem.f6.title">Konflikt w drużynie</h3>
+          <p data-i18n="athletes.problem.f6.desc">Napięcia w zespole wpływają na wyniki indywidualne i zespołowe.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="label" data-i18n="athletes.process.label">Proces</span>
+        <h2 data-i18n="athletes.process.title">Jak wygląda współpraca</h2>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-step fade-up">
+          <div class="step-number">1</div>
+          <h3 style="color:var(--gold);" data-i18n="athletes.process.s1.title">Analiza</h3>
+          <p data-i18n="athletes.process.s1.desc">Oceniamy Twoją obecną formę mentalną, identyfikujemy bariery, mocne strony i definiujemy cele sportowe.</p>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-number">2</div>
+          <h3 style="color:var(--gold);" data-i18n="athletes.process.s2.title">Strategia</h3>
+          <p data-i18n="athletes.process.s2.desc">Opracowujemy indywidualną strategię mentalną z wykorzystaniem technik sprawdzonych w profesjonalnym sporcie.</p>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-number">3</div>
+          <h3 style="color:var(--gold);" data-i18n="athletes.process.s3.title">Trening</h3>
+          <p data-i18n="athletes.process.s3.desc">Regularne sesje i ćwiczenia mentalne stają się częścią Twojego planu treningowego.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BACKGROUND ===== -->
+  <section class="section section-white" id="background">
+    <div class="container">
+      <div class="about-grid fade-up">
+        <div class="about-image image-stack-wrapper">
+          <div class="image-stack" id="imageStack">
+            <div class="stack-card" data-index="0">
+              <img src="images/sport/Zrzut ekranu 2026-04-09 234111.png" alt="Rugby na boisku" draggable="false">
+            </div>
+            <div class="stack-card" data-index="1">
+              <img src="images/sport/5f33df0a-1b73-4b1b-9e93-959fc28389a3 (1).JPG" alt="Beach Rugby Sopot" draggable="false">
+            </div>
+            <div class="stack-card" data-index="2">
+              <img src="images/sport/f1a687ae-c9d0-4f35-9878-eb44fddfe1c8 (1).JPG" alt="Zwycięstwo z pucharem" draggable="false">
+            </div>
+            <div class="stack-card" data-index="3">
+              <img src="images/sport/05b80a34-ce9a-4615-9380-3f2094a3acb7.JPG" alt="Drużyna z medalami" draggable="false">
+            </div>
+            <div class="stack-card" data-index="4">
+              <img src="images/sport/IMG_5808.jpeg" alt="Trening mentalny EEG" draggable="false">
+            </div>
+          </div>
+          <!-- Navigation dots -->
+          <div class="stack-dots" id="stackDots">
+            <button class="stack-dot active" data-goto="0" aria-label="Zdjęcie 1"></button>
+            <button class="stack-dot" data-goto="1" aria-label="Zdjęcie 2"></button>
+            <button class="stack-dot" data-goto="2" aria-label="Zdjęcie 3"></button>
+            <button class="stack-dot" data-goto="3" aria-label="Zdjęcie 4"></button>
+            <button class="stack-dot" data-goto="4" aria-label="Zdjęcie 5"></button>
+          </div>
+          <!-- Counter -->
+          <div class="stack-counter" id="stackCounter">
+            <span class="stack-counter-current">01</span>
+            <div class="stack-counter-divider"></div>
+            <span class="stack-counter-total">05</span>
+          </div>
+        </div>
+        <div class="about-text">
+          <span class="label" style="display:inline-block; color:var(--gold); font-size:0.8rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.75rem;" data-i18n="athletes.bg.label">Doświadczenie</span>
+          <h2 data-i18n="athletes.bg.title">Dlaczego mogę Ci pomóc</h2>
+          <p data-i18n="athletes.bg.p1">Jako były zawodnik Rugby Klub Lechia Gdańsk wiem, czym jest rywalizacja, presja i walka o wynik. Sportowa determinacja i duch walki kształtowały moje podejście do każdego wyzwania.</p>
+          <p data-i18n="athletes.bg.p2">Ukończyłem szkolenie trenera mentalnego u Jakuba B. Bączka — trenera mentalnego Roberta Lewandowskiego. Współpracuję z dwiema polskimi psycholożkami, łącząc sprawdzone metody naukowe z praktycznym doświadczeniem sportowym.</p>
+          <p data-i18n="athletes.bg.p3">Inspiruję się tym, jak najlepsi zawodnicy na świecie wykorzystują techniki mentalne do osiągania i utrzymywania sukcesów. Te same metody mogą pomóc Tobie.</p>
+          <div class="about-credentials">
+            <div class="credential">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span data-i18n="about.credential2">Certyfikowany Trener Mentalny</span>
+            </div>
+            <div class="credential">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span data-i18n="about.credential3">Rugby Klub Lechia Gdańsk</span>
+            </div>
+            <div class="credential">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span data-i18n="about.credential1">DiNapoli Expert</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUOTE ===== -->
+  <section class="section-steel quote-section">
+    <blockquote data-i18n="quote.text">„Wszystko jest trudne, zanim stanie się jasne. Sukces odnoszą ci, którzy potrafią zmusić się do pracy."</blockquote>
+    <cite data-i18n="quote.author">— J.W. Goethe</cite>
+  </section>
+
+  <!-- ===== BOOKING CALENDAR ===== -->
+  <section class="section section-cream" id="calendar">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="label" data-i18n="athletes.calendar.label">Rezerwacja</span>
+        <h2 data-i18n="athletes.calendar.title">Umów sesję coachingową</h2>
+        <p data-i18n="athletes.calendar.subtitle">Wybierz dogodny termin na sesję mentalną online.</p>
+      </div>
+      <div class="calendar-placeholder fade-up">
+        <h3 data-i18n="athletes.calendar.placeholder.title">Kalendarz rezerwacji</h3>
+        <p data-i18n="athletes.calendar.placeholder.desc">Tutaj zostanie osadzony system rezerwacji (np. Calendly). Skontaktuj się, aby umówić sesję.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section-dark cta-section" id="contact">
+    <div class="container fade-up">
+      <h2 data-i18n="athletes.cta.title">Gotowy na mentalną przewagę?</h2>
+      <p data-i18n="athletes.cta.desc">Umów pierwszą sesję i zacznij rywalizować z pewnością siebie.</p>
+      <div class="cta-buttons">
+        <a href="#calendar" class="btn btn-primary" data-i18n="athletes.cta.btn1">Umów Sesję</a>
+        <a href="mailto:kontakt@besler.pl" class="btn btn-gold-outline" data-i18n="athletes.cta.btn2">Napisz do mnie</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.2rem;">BESLER<span style="color:var(--gold);">.</span></a>
+        <p data-i18n="footer.desc">Trener mentalny i DiNapoli Expert. Pomagam traderom i sportowcom osiągać szczytową formę pod presją.</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.nav">Nawigacja</h4>
+        <ul>
+          <li><a href="index.html" data-i18n="nav.home">Strona Główna</a></li>
+          <li><a href="index.html#about" data-i18n="nav.about">O Mnie</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.services">Usługi</h4>
+        <ul>
+          <li><a href="trading.html" data-i18n="nav.trading">Trading</a></li>
+          <li><a href="athletes.html" data-i18n="nav.athletes">Sportowcy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.contact">Kontakt</h4>
+        <ul>
+          <li><a href="mailto:kontakt@besler.pl" data-i18n="footer.email">kontakt@besler.pl</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2024 Besler. <span data-i18n="footer.rights">Wszelkie prawa zastrzeżone.</span></span>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="pl">PL</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/image-stack.js"></script>
+
+  <!-- Full Screen Scroll FX -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    var total = 5;
+    var lastIndex = 0;
+    var isAnimating = false;
+    var isSnapping = false;
+
+    var pinned = document.getElementById('fxPinned');
+    if (!pinned) return;
+
+    var bgImgs = pinned.querySelectorAll('.fx-bg-img');
+    var leftTrack = document.getElementById('fxLeftTrack');
+    var rightTrack = document.getElementById('fxRightTrack');
+    var leftItems = pinned.querySelectorAll('.fx-left-item');
+    var rightItems = pinned.querySelectorAll('.fx-right-item');
+    var progressFill = document.getElementById('fxProgressFill');
+    var currentNumber = document.getElementById('fxCurrentNum');
+    var allFeatured = pinned.querySelectorAll('.fx-featured');
+
+    // Collect word spans per section
+    var wordGroups = [];
+    allFeatured.forEach(function(feat, idx) {
+      wordGroups[idx] = Array.from(feat.querySelectorAll('.fx-word'));
+    });
+
+    // Init backgrounds
+    gsap.set(bgImgs, { opacity: 0, scale: 1.06 });
+    if (bgImgs[0]) gsap.set(bgImgs[0], { opacity: 1, scale: 1 });
+
+    // Init word positions
+    wordGroups.forEach(function(words, idx) {
+      words.forEach(function(w) {
+        gsap.set(w, { yPercent: idx === 0 ? 0 : 100, opacity: idx === 0 ? 1 : 0 });
+      });
+    });
+
+    // Center list track so active row is vertically centered
+    function centerTrack(track, items, toIndex, animate) {
+      if (!track || items.length === 0) return;
+      var container = track.parentElement;
+      var first = items[0];
+      var second = items[1];
+      var contH = container.getBoundingClientRect().height;
+      var rowH = first.getBoundingClientRect().height;
+      if (second) rowH = second.getBoundingClientRect().top - first.getBoundingClientRect().top;
+      var targetY = contH / 2 - rowH / 2 - toIndex * rowH;
+      if (animate) {
+        gsap.to(track, { y: targetY, duration: 0.65, ease: 'power3.out' });
+      } else {
+        gsap.set(track, { y: targetY });
+      }
+    }
+
+    function measureAndCenter(toIndex, animate) {
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          centerTrack(leftTrack, Array.from(leftItems), toIndex, animate);
+          centerTrack(rightTrack, Array.from(rightItems), toIndex, animate);
+        });
+      });
+    }
+
+    // Section change animation
+    function changeSection(to) {
+      if (to === lastIndex || isAnimating) return;
+      var from = lastIndex;
+      var down = to > from;
+      isAnimating = true;
+      var D = 0.7;
+
+      // Progress numbers + bar
+      if (currentNumber) currentNumber.textContent = String(to + 1).padStart(2, '0');
+      if (progressFill) progressFill.style.width = (to / (total - 1)) * 100 + '%';
+
+      // Words OUT
+      var outWords = wordGroups[from] || [];
+      if (outWords.length) {
+        gsap.to(outWords, {
+          yPercent: down ? -100 : 100, opacity: 0,
+          duration: D * 0.55, stagger: down ? 0.03 : -0.03, ease: 'power3.out'
+        });
+      }
+
+      // Words IN
+      var inWords = wordGroups[to] || [];
+      if (inWords.length) {
+        gsap.set(inWords, { yPercent: down ? 100 : -100, opacity: 0 });
+        gsap.to(inWords, {
+          yPercent: 0, opacity: 1,
+          duration: D, stagger: down ? 0.05 : -0.05, ease: 'power3.out'
+        });
+      }
+
+      // Featured visibility
+      allFeatured.forEach(function(el, i) { el.classList.toggle('active', i === to); });
+
+      // Background fade transition
+      var prevBg = bgImgs[from];
+      var newBg = bgImgs[to];
+      if (newBg) {
+        gsap.set(newBg, { opacity: 0, scale: 1.06, yPercent: down ? 2 : -2 });
+        gsap.to(newBg, { opacity: 1, scale: 1, yPercent: 0, duration: D, ease: 'power2.out' });
+      }
+      if (prevBg) {
+        gsap.to(prevBg, { opacity: 0, yPercent: down ? -4 : 4, duration: D, ease: 'power2.out' });
+      }
+
+      // Side lists
+      measureAndCenter(to, true);
+      leftItems.forEach(function(el, i) {
+        el.classList.toggle('active', i === to);
+        gsap.to(el, { opacity: i === to ? 1 : 0.3, x: i === to ? 10 : 0, duration: D * 0.6, ease: 'power3.out' });
+      });
+      rightItems.forEach(function(el, i) {
+        el.classList.toggle('active', i === to);
+        gsap.to(el, { opacity: i === to ? 1 : 0.3, x: i === to ? -10 : 0, duration: D * 0.6, ease: 'power3.out' });
+      });
+
+      gsap.delayedCall(D, function() {
+        lastIndex = to;
+        isAnimating = false;
+      });
+    }
+
+    // Navigate to section
+    var st;
+    function goTo(to) {
+      var clamped = Math.max(0, Math.min(total - 1, to));
+      if (clamped === lastIndex && !isAnimating) return;
+      isSnapping = true;
+      changeSection(clamped);
+      if (st) {
+        var scrollY = st.start + (clamped / total) * (st.end - st.start);
+        window.scrollTo({ top: scrollY, behavior: 'smooth' });
+      }
+      setTimeout(function() { isSnapping = false; }, 900);
+    }
+
+    // Click handlers on list items
+    leftItems.forEach(function(el, i) { el.addEventListener('click', function() { goTo(i); }); });
+    rightItems.forEach(function(el, i) { el.addEventListener('click', function() { goTo(i); }); });
+
+    // Keyboard support for list items
+    pinned.querySelectorAll('.fx-item').forEach(function(el) {
+      el.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
+    });
+
+    // Initial centering
+    measureAndCenter(0, false);
+
+    // Entrance stagger animation
+    leftItems.forEach(function(el, i) {
+      gsap.fromTo(el, { opacity: 0, y: 24 }, {
+        opacity: i === 0 ? 1 : 0.3, y: 0,
+        duration: 0.6, delay: 0.4 + i * 0.07, ease: 'power3.out'
+      });
+    });
+    rightItems.forEach(function(el, i) {
+      gsap.fromTo(el, { opacity: 0, y: 24 }, {
+        opacity: i === 0 ? 1 : 0.3, y: 0,
+        duration: 0.6, delay: 0.6 + i * 0.07, ease: 'power3.out'
+      });
+    });
+
+    // ScrollTrigger — pin + detect section
+    st = ScrollTrigger.create({
+      trigger: pinned,
+      start: 'top top',
+      end: function() { return '+=' + (window.innerHeight * total); },
+      pin: true,
+      pinSpacing: true,
+      onUpdate: function(self) {
+        if (isSnapping) return;
+        var prog = self.progress;
+        var target = Math.min(total - 1, Math.floor(prog * total));
+        if (target !== lastIndex && !isAnimating) {
+          var step = lastIndex + (target > lastIndex ? 1 : -1);
+          changeSection(step);
+        }
+      }
+    });
+
+    // Resize handling
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        measureAndCenter(lastIndex, false);
+        ScrollTrigger.refresh();
+      }, 200);
+    });
+  });
+  </script>
+</body>
+</html>

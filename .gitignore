@@ -1,0 +1,8 @@
+# Brand reference / design docs (not part of the live site)
+Prezentacja zasad marki.png
+do zawarcia
+
+# Dev tools / temp
+node_modules/
+.DS_Store
+Thumbs.db
