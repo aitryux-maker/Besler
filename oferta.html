@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oferta — Besler | Trening Mentalny</title>
+  <meta name="description" content="Oferta treningu mentalnego dla traderów i sportowców. Sesje indywidualne, pakiety coachingowe i e-booki. Besler — DiNapoli Expert & Trener Mentalny.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ===== Oferta Page Styles ===== */
+    .oferta-hero {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .oferta-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 30% 40%, rgba(212, 168, 67, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(255, 46, 46, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .oferta-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .oferta-hero-content .label {
+      display: inline-block;
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .oferta-hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--white);
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .oferta-hero-content h1 em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    .oferta-hero-content p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    /* Offer category divider */
+    .oferta-category-header {
+      text-align: center;
+      padding: 3rem 2rem 1rem;
+    }
+
+    .oferta-category-header h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .oferta-category-header .category-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.5rem;
+      background: rgba(212, 168, 67, 0.1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .oferta-category-header .category-icon svg {
+      width: 32px;
+      height: 32px;
+      color: var(--gold);
+    }
+
+    .oferta-category-header p {
+      color: rgba(255, 255, 255, 0.55);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Offer cards grid */
+    .oferta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    .oferta-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .oferta-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .oferta-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .oferta-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .oferta-card--featured {
+      border-color: rgba(212, 168, 67, 0.25);
+      background: rgba(212, 168, 67, 0.04);
+    }
+
+    .oferta-card--featured::before {
+      transform: scaleX(1);
+    }
+
+    .oferta-card-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: #0A0A0A;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-bottom: 1.25rem;
+      width: fit-content;
+    }
+
+    .oferta-card h3 {
+      color: var(--white);
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .oferta-card .oferta-desc {
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .oferta-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem;
+    }
+
+    .oferta-features li {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      padding: 0.3rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .oferta-features li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .oferta-card .btn {
+      align-self: flex-start;
+      font-size: 0.85rem;
+      padding: 10px 24px;
+    }
+
+    /* Section divider line */
+    .oferta-divider {
+      max-width: 1100px;
+      margin: 2rem auto;
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    @media (max-width: 768px) {
+      .oferta-grid {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 0;
+      }
+
+      .oferta-hero {
+        padding: 8rem 1.5rem 3rem;
+        min-height: 40vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">BESLER<span>.</span></a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Strona Główna</a></li>
+        <li><a href="trading.html" data-i18n="nav.trading">Trading</a></li>
+        <li><a href="athletes.html" data-i18n="nav.athletes">Sportowcy</a></li>
+        <li><a href="oferta.html" class="active" data-i18n="nav.oferta">Oferta</a></li>
+        <li><a href="index.html#about" data-i18n="nav.about">O Mnie</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Kontakt</a></li>
+        <li>
+          <div class="lang-toggle">
+            <button class="lang-btn active" data-lang="pl">PL</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+          </div>
+        </li>
+      </ul>
+
+      <button class="nav-hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="oferta-hero">
+    <div class="oferta-hero-content fade-up">
+      <span class="label" data-i18n="oferta.hero.label">Oferta</span>
+      <h1 data-i18n="oferta.hero.title">Wybierz swoją <em>ścieżkę rozwoju</em></h1>
+      <p data-i18n="oferta.hero.subtitle">Indywidualnie dopasowane pakiety treningu mentalnego dla traderów i sportowców. Zainwestuj w swoją mentalną przewagę.</p>
+    </div>
+  </section>
+
+  <!-- ===== TRADING SECTION ===== -->
+  <section class="section section-dark" id="trading-oferta">
+    <div class="container">
+      <div class="oferta-category-header fade-up">
+        <div class="category-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h2 data-i18n="oferta.trading.title">Trening Mentalny dla Traderów</h2>
+        <p data-i18n="oferta.trading.subtitle">Opanuj emocje, utrzymaj dyscyplinę i podejmuj trafne decyzje pod presją rynku.</p>
+      </div>
+
+      <div class="oferta-grid fade-up">
+        <!-- Single Session -->
+        <div class="oferta-card">
+          <h3 data-i18n="oferta.trading.s1.title">Sesja Pojedyncza</h3>
+          <p class="oferta-desc" data-i18n="oferta.trading.s1.desc">Jednorazowa sesja coachingowa online. Idealna na start lub gdy potrzebujesz wsparcia w konkretnej sytuacji rynkowej.</p>
+          <ul class="oferta-features">
+            <li data-i18n="oferta.trading.s1.f1">60 minut sesji online</li>
+            <li data-i18n="oferta.trading.s1.f2">Diagnoza mentalnych blokad</li>
+            <li data-i18n="oferta.trading.s1.f3">Techniki do natychmiastowego wdrożenia</li>
+            <li data-i18n="oferta.trading.s1.f4">Podsumowanie i plan działania</li>
+          </ul>
+          <a href="trading.html#calendar" class="btn btn-outline" data-i18n="oferta.cta.book">Umów sesję</a>
+        </div>
+
+        <!-- Package -->
+        <div class="oferta-card oferta-card--featured">
+          <span class="oferta-card-badge" data-i18n="oferta.badge.popular">Najpopularniejsze</span>
+          <h3 data-i18n="oferta.trading.s2.title">Pakiet Mentalny</h3>
+          <p class="oferta-desc" data-i18n="oferta.trading.s2.desc">Kompleksowy program mentalny dopasowany do Twojego stylu tradingu. Regularne sesje i wsparcie między spotkaniami.</p>
+          <ul class="oferta-features">
+            <li data-i18n="oferta.trading.s2.f1">4 sesje online (60 min każda)</li>
+            <li data-i18n="oferta.trading.s2.f2">Spersonalizowany plan mentalny</li>
+            <li data-i18n="oferta.trading.s2.f3">Ćwiczenia i techniki między sesjami</li>
+            <li data-i18n="oferta.trading.s2.f4">Wsparcie mailowe między sesjami</li>
+            <li data-i18n="oferta.trading.s2.f5">Analiza dziennika tradingowego</li>
+          </ul>
+          <a href="trading.html#calendar" class="btn btn-primary" data-i18n="oferta.cta.book">Umów sesję</a>
+        </div>
+
+        <!-- E-book -->
+        <div class="oferta-card">
+          <h3 data-i18n="oferta.trading.s3.title">E-book: Psychologia Tradingu</h3>
+          <p class="oferta-desc" data-i18n="oferta.trading.s3.desc">Sprawdzone techniki mentalne w formie e-booka. Dostępny w języku polskim i angielskim.</p>
+          <ul class="oferta-features">
+            <li data-i18n="oferta.trading.s3.f1">Techniki zarządzania emocjami</li>
+            <li data-i18n="oferta.trading.s3.f2">Budowanie dyscypliny tradingowej</li>
+            <li data-i18n="oferta.trading.s3.f3">Ćwiczenia praktyczne</li>
+            <li data-i18n="oferta.trading.s3.f4">Dostępny w PL i EN</li>
+          </ul>
+          <a href="trading.html#ebook" class="btn btn-outline" data-i18n="oferta.cta.ebook">Zobacz e-book</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="oferta-divider">
+
+  <!-- ===== SPORT SECTION ===== -->
+  <section class="section section-dark" id="sport-oferta">
+    <div class="container">
+      <div class="oferta-category-header fade-up">
+        <div class="category-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h2 data-i18n="oferta.sport.title">Trening Mentalny dla Sportowców</h2>
+        <p data-i18n="oferta.sport.subtitle">Rozwijaj siłę mentalną potrzebną do rywalizacji na najwyższym poziomie.</p>
+      </div>
+
+      <div class="oferta-grid fade-up">
+        <!-- Single Session -->
+        <div class="oferta-card">
+          <h3 data-i18n="oferta.sport.s1.title">Sesja Pojedyncza</h3>
+          <p class="oferta-desc" data-i18n="oferta.sport.s1.desc">Jednorazowa sesja mentalnego coachingu. Wsparcie przed ważnymi zawodami lub w trudnym momencie kariery.</p>
+          <ul class="oferta-features">
+            <li data-i18n="oferta.sport.s1.f1">60 minut sesji online</li>
+            <li data-i18n="oferta.sport.s1.f2">Analiza mentalnych barier</li>
+            <li data-i18n="oferta.sport.s1.f3">Techniki radzenia sobie z presją</li>
+            <li data-i18n="oferta.sport.s1.f4">Plan działania po sesji</li>
+          </ul>
+          <a href="athletes.html#calendar" class="btn btn-outline" data-i18n="oferta.cta.book">Umów sesję</a>
+        </div>
+
+        <!-- Package -->
+        <div class="oferta-card oferta-card--featured">
+          <span class="oferta-card-badge" data-i18n="oferta.badge.popular">Najpopularniejsze</span>
+          <h3 data-i18n="oferta.sport.s2.title">Pakiet Sportowy</h3>
+          <p class="oferta-desc" data-i18n="oferta.sport.s2.desc">Kompleksowy program mentalny dla sportowców. Regularny trening mentalny jako element Twojego planu treningowego.</p>
+          <ul class="oferta-features">
+            <li data-i18n="oferta.sport.s2.f1">4 sesje online (60 min każda)</li>
+            <li data-i18n="oferta.sport.s2.f2">Indywidualna strategia mentalna</li>
+            <li data-i18n="oferta.sport.s2.f3">Ćwiczenia wizualizacji i koncentracji</li>
+            <li data-i18n="oferta.sport.s2.f4">Wsparcie między sesjami</li>
+            <li data-i18n="oferta.sport.s2.f5">Techniki przed-startowe</li>
+          </ul>
+          <a href="athletes.html#calendar" class="btn btn-primary" data-i18n="oferta.cta.book">Umów sesję</a>
+        </div>
+
+        <!-- Team -->
+        <div class="oferta-card">
+          <h3 data-i18n="oferta.sport.s3.title">Coaching Drużynowy</h3>
+          <p class="oferta-desc" data-i18n="oferta.sport.s3.desc">Trening mentalny dla całego zespołu. Budowanie spójności, komunikacji i mentalnej odporności grupy.</p>
+          <ul class="oferta-features">
+            <li data-i18n="oferta.sport.s3.f1">Sesje grupowe dla drużyny</li>
+            <li data-i18n="oferta.sport.s3.f2">Budowanie dynamiki zespołu</li>
+            <li data-i18n="oferta.sport.s3.f3">Techniki komunikacji sportowej</li>
+            <li data-i18n="oferta.sport.s3.f4">Program dopasowany do sezonu</li>
+          </ul>
+          <a href="athletes.html#calendar" class="btn btn-outline" data-i18n="oferta.cta.contact">Skontaktuj się</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section-dark cta-section" id="contact">
+    <div class="container fade-up">
+      <h2 data-i18n="oferta.cta.title">Nie wiesz, co wybrać?</h2>
+      <p data-i18n="oferta.cta.desc">Napisz do mnie — pomogę dobrać najlepszą opcję dopasowaną do Twoich potrzeb.</p>
+      <div class="cta-buttons">
+        <a href="mailto:pawelbesler@gmail.com" class="btn btn-primary" data-i18n="oferta.cta.btn1">Napisz do mnie</a>
+        <a href="index.html#about" class="btn btn-gold-outline" data-i18n="oferta.cta.btn2">Poznaj mnie</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.2rem;">BESLER<span style="color:var(--gold);">.</span></a>
+        <p data-i18n="footer.desc">Trener mentalny i DiNapoli Expert. Pomagam traderom i sportowcom osiągać szczytową formę pod presją.</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.nav">Nawigacja</h4>
+        <ul>
+          <li><a href="index.html" data-i18n="nav.home">Strona Główna</a></li>
+          <li><a href="index.html#about" data-i18n="nav.about">O Mnie</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.services">Usługi</h4>
+        <ul>
+          <li><a href="trading.html" data-i18n="nav.trading">Trading</a></li>
+          <li><a href="athletes.html" data-i18n="nav.athletes">Sportowcy</a></li>
+          <li><a href="oferta.html" data-i18n="nav.oferta">Oferta</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.contact">Kontakt</h4>
+        <ul>
+          <li><a href="mailto:pawelbesler@gmail.com" data-i18n="footer.email">pawelbesler@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2024 Besler. <span data-i18n="footer.rights">Wszelkie prawa zastrzeżone.</span></span>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="pl">PL</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

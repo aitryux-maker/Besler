@@ -34,6 +34,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -400,6 +401,20 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
     drop-shadow(0 0 100px rgba(255, 46, 46, 0.08));
 }
 
+.hero-motto {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 500;
+  color: rgba(245, 245, 245, 0.75);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1rem 2rem 0;
+  margin: 0;
+  font-style: italic;
+}
+
 .hero-bottom {
   position: relative;
   z-index: 4;
@@ -514,21 +529,16 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
 @media (max-width: 768px) {
   .trading-hero-split {
     flex-direction: column;
+    justify-content: center;
   }
   .trading-hero-person {
-    position: relative;
-    width: 100%;
-    height: auto;
-  }
-  .trading-hero-person img {
-    height: auto;
-    max-height: 45vh;
+    display: none;
   }
   .trading-hero-text {
     margin-left: 0;
     width: 100%;
     text-align: center;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
 }
 
@@ -638,94 +648,12 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
   z-index: 1;
 }
 
-.section-dark {
-  background: rgba(15, 27, 45, 0.6);
-  color: var(--white);
-}
-
-.section-steel {
-  background: rgba(42, 74, 107, 0.35);
-  color: var(--white);
-}
-
-.section-cream {
-  background: rgba(255, 255, 255, 0.04);
-}
-
+.section-dark,
+.section-steel,
+.section-cream,
 .section-white {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-/* Smooth gradient transitions between sections */
-.section::before {
-  content: '';
-  position: absolute;
-  top: -120px;
-  left: 0;
-  right: 0;
-  height: 120px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.section-white::before {
-  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.06));
-}
-
-.section-cream::before {
-  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.04));
-}
-
-.section-dark::before {
-  background: linear-gradient(to bottom, transparent, rgba(15, 27, 45, 0.6));
-}
-
-.section-steel::before {
-  content: '';
-  position: absolute;
-  top: -120px;
-  left: 0;
-  right: 0;
-  height: 120px;
-  pointer-events: none;
-  z-index: 0;
-  background: linear-gradient(to bottom, transparent, rgba(42, 74, 107, 0.35));
-}
-
-/* Bottom fade-out for sections */
-.section::after {
-  content: '';
-  position: absolute;
-  bottom: -120px;
-  left: 0;
-  right: 0;
-  height: 120px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.section-white::after {
-  background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.06));
-}
-
-.section-cream::after {
-  background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.04));
-}
-
-.section-dark::after {
-  background: linear-gradient(to top, transparent, rgba(15, 27, 45, 0.6));
-}
-
-.section-steel::after {
-  content: '';
-  position: absolute;
-  bottom: -120px;
-  left: 0;
-  right: 0;
-  height: 120px;
-  pointer-events: none;
-  z-index: 0;
-  background: linear-gradient(to top, transparent, rgba(42, 74, 107, 0.35));
+  background: transparent;
+  color: var(--white);
 }
 
 .container {
@@ -1161,6 +1089,61 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
   font-style: italic;
 }
 
+/* Event item as link */
+a.event-item {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a.event-item:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+a.event-item:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+a.event-item:active {
+  transform: translateY(0);
+}
+
+/* Event meta info */
+.event-time,
+.event-location {
+  display: inline-block;
+  margin-right: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Events loading state */
+.events-loading {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.events-loading::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--gold);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: calendarSpin 0.8s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@keyframes calendarSpin {
+  to { transform: rotate(360deg); }
+}
+
 /* --- Partners Section --- */
 .partners-grid {
   display: flex;
@@ -1419,6 +1402,267 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* --- Calendar Section Text --- */
+#calendar .section-header h2 {
+  color: #FFFFFF;
+}
+
+#calendar .section-header p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+#calendar .section-header .label {
+  color: var(--gold);
+}
+
+/* --- Calendar Embed (Google Appointment Scheduling) --- */
+.calendar-embed-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(212, 168, 67, 0.35);
+  box-shadow:
+    0 12px 48px rgba(20, 24, 32, 0.18),
+    0 0 80px rgba(212, 168, 67, 0.08),
+    0 0 0 1px rgba(20, 24, 32, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  padding: 14px;
+}
+
+/* Decorative header bar inside wrapper */
+.calendar-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px 16px;
+  border-bottom: 1px solid rgba(20, 24, 32, 0.08);
+  margin-bottom: 14px;
+}
+
+.calendar-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-header-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(212, 168, 67, 0.6);
+  flex-shrink: 0;
+}
+
+.calendar-header-title {
+  color: #14181F;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.calendar-header-external {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(20, 24, 32, 0.6);
+  font-size: 0.8rem;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.calendar-header-external:hover,
+.calendar-header-external:focus-visible {
+  color: var(--gold);
+  background: rgba(212, 168, 67, 0.08);
+  transform: translateY(-1px);
+}
+
+.calendar-header-external svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Inner frame holds the iframe + loading/fallback states */
+.calendar-embed-inner {
+  position: relative;
+  min-height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FAF8F3;
+  border: 1px solid rgba(20, 24, 32, 0.06);
+}
+
+.calendar-embed-iframe {
+  width: 100%;
+  height: 700px;
+  border: none;
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  display: block;
+}
+
+.calendar-embed-iframe.loaded {
+  opacity: 1;
+}
+
+.calendar-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #14181F;
+  font-style: italic;
+  font-size: 1.05rem;
+  z-index: 1;
+}
+
+.calendar-loading::after {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--gold);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: calendarSpin 0.8s linear infinite;
+  margin: 12px auto 0;
+}
+
+.calendar-loading.calendar-not-configured::after {
+  display: none;
+}
+
+/* Fallback — shown when iframe can't load. Big, styled CTA. */
+.calendar-fallback {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  padding: 16px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #FFFFFF;
+}
+
+.calendar-fallback:hover,
+.calendar-fallback:focus-visible {
+  color: #FFFFFF;
+}
+
+.calendar-direct-cta .btn-primary,
+.calendar-direct-cta .btn-primary:hover,
+.calendar-direct-cta .btn-primary:focus-visible {
+  color: #FFFFFF;
+}
+
+/* Direct-book CTA card below the iframe — always visible */
+.calendar-direct-cta {
+  max-width: 900px;
+  margin: 1.5rem auto 0;
+  padding: 1.5rem 1.75rem;
+  background: linear-gradient(135deg, rgba(212, 168, 67, 0.14), rgba(212, 168, 67, 0.05));
+  border: 1px solid rgba(212, 168, 67, 0.35);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.calendar-direct-cta-text {
+  flex: 1;
+  min-width: 240px;
+}
+
+.calendar-direct-cta-text strong {
+  display: block;
+  color: #14181F;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.calendar-direct-cta-text span {
+  color: rgba(20, 24, 32, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.calendar-direct-cta .btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calendar-direct-cta .btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Dark section: keep wrapper white, strengthen outer glow for contrast */
+.section-dark .calendar-embed-wrapper {
+  background: #FFFFFF;
+  border-color: rgba(212, 168, 67, 0.45);
+  box-shadow:
+    0 16px 56px rgba(0, 0, 0, 0.45),
+    0 0 100px rgba(212, 168, 67, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+  .calendar-embed-iframe {
+    height: 500px;
+  }
+  .calendar-embed-inner {
+    min-height: 450px;
+  }
+  .calendar-embed-wrapper {
+    padding: 10px;
+  }
+  .calendar-direct-cta {
+    padding: 1.25rem;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .calendar-direct-cta .btn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-embed-iframe {
+    height: 450px;
+  }
+  .calendar-embed-inner {
+    min-height: 400px;
+  }
+  .calendar-embed-wrapper {
+    border-radius: 14px;
+    padding: 8px;
+  }
+  .calendar-header-bar {
+    padding: 4px 8px 12px;
+    margin-bottom: 10px;
+  }
+  .calendar-header-external span {
+    display: none;
+  }
+}
+
 /* --- Resources Grid --- */
 .resources-grid {
   display: grid;
@@ -1458,7 +1702,7 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
   padding: 5rem 1.5rem;
   position: relative;
   z-index: 1;
-  background: linear-gradient(to bottom, rgba(42, 74, 107, 0.35), rgba(42, 74, 107, 0.25));
+  background: transparent;
 }
 
 .quote-section blockquote {
@@ -1869,9 +2113,7 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
 .trust-bar {
   position: relative;
   z-index: 1;
-  background: rgba(10, 10, 10, 0.6);
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  background: transparent;
   padding: 1.25rem 0;
 }
 
@@ -1958,7 +2200,7 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
 /* --- Orbital Timeline (main/features) --- */
 .orbital-section {
   overflow: hidden;
-  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.3), rgba(15, 27, 45, 0.6), rgba(15, 27, 45, 0.6));
+  background: transparent;
 }
 
 .orbital-viewport {
@@ -2180,8 +2422,9 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
   position: relative;
   z-index: 1;
   padding: 2rem 1.5rem;
-  background: rgba(10, 10, 10, 0.95);
+  background: transparent;
 }
+
 
 .scroll-section-sticky {
   position: sticky;
@@ -2431,17 +2674,111 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
     width: 100%;
   }
 
+  /* --- Orbital → Vertical Timeline on mobile --- */
   .orbital-viewport {
-    height: 450px;
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 1.5rem 2rem;
+    position: relative;
   }
 
+  .orbital-center-group,
+  .orbital-center-orb,
+  .orbital-center-inner,
+  .orbital-center-ping,
   .orbital-ring {
-    width: 280px;
-    height: 280px;
+    display: none !important;
+  }
+
+  .orbital-node {
+    position: relative !important;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.25rem 1rem;
+    padding: 1.25rem 0;
+    padding-left: 0;
+    border-left: none;
+    cursor: default;
+  }
+
+  /* Vertical connecting line between nodes */
+  .orbital-node::before {
+    content: '';
+    position: absolute;
+    left: calc(2.25rem / 2 - 1px);
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    z-index: -1;
+  }
+
+  .orbital-node:first-of-type::before {
+    top: 50%;
+  }
+
+  .orbital-node:last-of-type::before {
+    bottom: 50%;
+  }
+
+  .orbital-node-dot {
+    grid-row: 1 / 3;
+    grid-column: 1;
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    position: relative;
+    align-self: start;
+    margin-top: 0.15rem;
+  }
+
+  .orbital-node-title {
+    grid-column: 2;
+    grid-row: 1;
+    position: static;
+    transform: none !important;
+    white-space: normal;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: white;
   }
 
   .orbital-node-card {
-    width: 14rem;
+    grid-column: 2;
+    grid-row: 2;
+    position: static;
+    transform: none !important;
+    width: 100% !important;
+    opacity: 1;
+    pointer-events: auto;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    border-radius: 8px;
+  }
+
+  .orbital-node-card::before {
+    display: none;
+  }
+
+  .orbital-node.expanded .orbital-node-dot {
+    transform: none;
+  }
+
+  .orbital-node.expanded .orbital-node-title {
+    transform: none !important;
+  }
+
+  .orbital-node.expanded .orbital-node-card {
+    transform: none !important;
   }
 
   .scroll-section {
@@ -2491,28 +2828,6 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
 }
 
 @media (max-width: 480px) {
-  .orbital-viewport {
-    height: 400px;
-  }
-
-  .orbital-ring {
-    width: 220px;
-    height: 220px;
-  }
-
-  .orbital-node-card {
-    width: 12rem;
-    padding: 1rem;
-  }
-
-  .orbital-node-card h4 {
-    font-size: 0.8rem;
-  }
-
-  .orbital-node-card p {
-    font-size: 0.7rem;
-  }
-
   .scroll-section {
     height: 40rem;
   }
@@ -2527,8 +2842,9 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
    ============================================ */
 .zoom-parallax-section {
   position: relative;
-  background: #0A0A0A;
+  background: transparent;
 }
+
 
 .zoom-parallax-container {
   position: relative;
@@ -2560,6 +2876,8 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
   position: relative;
   overflow: hidden;
   border-radius: 4px;
+  transform-origin: center center;
+  will-change: transform;
 }
 
 .zp-img-wrap img {
@@ -2607,7 +2925,7 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
 }
 
 .zp-img-wrap--4 img {
-  object-position: center 25%;
+  object-position: center 60%;
 }
 
 .zp-img-wrap--5 {
@@ -2629,7 +2947,7 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
 /* --- Mobile adjustments --- */
 @media (max-width: 768px) {
   .zoom-parallax-container {
-    height: 200vh;
+    height: 160vh;
   }
 
   .zp-img-wrap--0 {
@@ -2676,5 +2994,107 @@ h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
     left: 18vw;
     width: 25vw;
     height: 12vh;
+  }
+}
+
+/* ============================================
+   GLOBAL MOBILE FIXES
+   ============================================ */
+
+/* Prevent any element from causing horizontal scroll */
+* { max-width: 100%; }
+img, video, iframe, svg { max-width: 100%; }
+
+@media (max-width: 768px) {
+
+  /* --- Quote section --- */
+  .quote-section {
+    padding: 3.5rem 1.5rem;
+  }
+  .quote-section blockquote {
+    font-size: clamp(1rem, 4.5vw, 1.3rem);
+  }
+
+  /* --- Hero names — prevent overflow on narrow screens --- */
+  .hero-name {
+    font-size: clamp(3.5rem, 18vw, 10rem);
+  }
+
+  /* --- About image — cap height on mobile --- */
+  .about-image {
+    max-height: 55vw;
+    aspect-ratio: unset;
+  }
+
+  /* --- Trading hero text size --- */
+  .trading-hero-text h1 {
+    font-size: clamp(1.6rem, 6vw, 2.5rem);
+  }
+
+  /* --- Scroll card frame — prevent bleed --- */
+  .scroll-card-wrapper {
+    width: calc(100% - 2rem);
+  }
+
+  /* --- Zoom parallax gallery — hide entirely on mobile --- */
+  .zoom-parallax-section {
+    display: none;
+  }
+
+  /* --- CTA section padding --- */
+  .cta-section {
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+
+  /* --- Resource cards full width --- */
+  .resource-card {
+    padding: 1.5rem;
+  }
+
+  /* --- Process steps on mobile --- */
+  .process-grid {
+    gap: 2rem;
+  }
+
+  /* --- Section headers --- */
+  .section-header h2 {
+    font-size: clamp(1.4rem, 6vw, 2.2rem);
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* --- Hero bottom badge — hide on very small screens --- */
+  .hero-bottom-right {
+    display: none;
+  }
+
+  /* --- Trust bar items smaller text --- */
+  .slider-item span {
+    font-size: 0.8rem;
+  }
+
+  /* --- Zoom parallax — further simplify, only center + top + bottom --- */
+  .zp-item--1,
+  .zp-item--3 {
+    display: none;
+  }
+
+  /* --- Quote text --- */
+  .quote-section blockquote {
+    font-size: 1rem;
+  }
+
+  /* --- Buttons full width on tiny screens --- */
+  .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .hero-cta .btn,
+  .cta-buttons .btn {
+    max-width: 280px;
   }
 }

@@ -45,14 +45,14 @@
     <div class="trading-hero-overlay"></div>
     <div class="trading-hero-split">
       <div class="trading-hero-person">
-        <img src="img/Kimg_ai-202649211938-removebg-preview.png" alt="Besler — Trading Coach">
+        <img src="img/na str.png" alt="Besler — Trading Coach">
       </div>
       <div class="trading-hero-text">
         <div class="hero-badge" data-i18n="trading.hero.badge">Trening Mentalny dla Traderów</div>
         <h1 data-i18n="trading.hero.title">Twój umysł to Twój <em>największy atut</em> na rynku</h1>
         <p class="hero-subtitle" data-i18n="trading.hero.subtitle">Naucz się kontrolować emocje, utrzymywać dyscyplinę i podejmować trafne decyzje pod presją rynku.</p>
         <div class="hero-cta">
-          <a href="#calendar" class="btn btn-primary" data-i18n="trading.hero.cta1">Umów Sesję</a>
+          <a href="oferta.html#trading-oferta" class="btn btn-primary" data-i18n="trading.hero.cta1">Umów Sesję</a>
           <a href="#problem" class="btn btn-secondary" data-i18n="trading.hero.cta2">Dowiedz się więcej</a>
         </div>
       </div>
@@ -221,21 +221,6 @@
     </div>
   </section>
 
-  <!-- ===== BOOKING CALENDAR ===== -->
-  <section class="section section-dark" id="calendar">
-    <div class="container">
-      <div class="section-header fade-up">
-        <span class="label" data-i18n="trading.calendar.label">Rezerwacja</span>
-        <h2 style="color:var(--white);" data-i18n="trading.calendar.title">Umów sesję coachingową</h2>
-        <p data-i18n="trading.calendar.subtitle">Wybierz dogodny termin na sesję mentalną online.</p>
-      </div>
-      <div class="calendar-placeholder fade-up" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.15);">
-        <h3 style="color:var(--white);" data-i18n="trading.calendar.placeholder.title">Kalendarz rezerwacji</h3>
-        <p style="color:rgba(255,255,255,0.6);" data-i18n="trading.calendar.placeholder.desc">Tutaj zostanie osadzony system rezerwacji (np. Calendly). Skontaktuj się, aby umówić sesję.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== RESOURCES ===== -->
   <section class="section section-cream" id="resources">
     <div class="container">
@@ -269,6 +254,44 @@
     </div>
   </section>
 
+  <!-- ===== BOOKING CALENDAR ===== -->
+  <section class="section section-dark" id="calendar">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="label" data-i18n="trading.calendar.label">Rezerwacja</span>
+        <h2 style="color:var(--white);" data-i18n="trading.calendar.title">Umów sesję coachingową</h2>
+        <p data-i18n="trading.calendar.subtitle">Wybierz dogodny termin na sesję mentalną online.</p>
+      </div>
+      <div class="calendar-embed-wrapper fade-up" id="booking-calendar">
+        <div class="calendar-header-bar">
+          <div class="calendar-header-left">
+            <span class="calendar-header-dot" aria-hidden="true"></span>
+            <span class="calendar-header-title" data-i18n="calendar.header.title">Wybierz termin sesji</span>
+          </div>
+          <a class="calendar-header-external" target="_blank" rel="noopener" title="Otwórz w pełnym oknie">
+            <span data-i18n="calendar.header.external">Pełny widok</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+        <div class="calendar-embed-inner">
+          <div class="calendar-loading" data-i18n="calendar.loading">Ładowanie kalendarza rezerwacji...</div>
+          <iframe class="calendar-embed-iframe" title="Booking Calendar" loading="lazy"></iframe>
+          <a class="calendar-fallback btn btn-primary" target="_blank" rel="noopener" data-i18n="calendar.fallback">Kliknij tutaj, aby zarezerwować termin</a>
+        </div>
+      </div>
+      <div class="calendar-direct-cta fade-up">
+        <div class="calendar-direct-cta-text">
+          <strong data-i18n="calendar.direct.title">Wolisz zarezerwować bezpośrednio?</strong>
+          <span data-i18n="calendar.direct.desc">Otwórz pełny kalendarz Google w nowej karcie dla najlepszego doświadczenia.</span>
+        </div>
+        <a class="btn btn-primary calendar-direct-link" target="_blank" rel="noopener">
+          <span data-i18n="calendar.direct.btn">Rezerwuj bezpośrednio</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== AFFIRMATIONS (Coming Soon) ===== -->
   <section class="section section-white">
     <div class="container" style="text-align:center;">
@@ -297,8 +320,8 @@
       <h2 data-i18n="trading.cta.title">Gotowy na mentalną przewagę?</h2>
       <p data-i18n="trading.cta.desc">Umów pierwszą sesję i zacznij tradować z pewnością siebie.</p>
       <div class="cta-buttons">
-        <a href="#calendar" class="btn btn-primary" data-i18n="trading.cta.btn1">Umów Sesję</a>
-        <a href="mailto:kontakt@besler.pl" class="btn btn-gold-outline" data-i18n="trading.cta.btn2">Napisz do mnie</a>
+        <a href="oferta.html#trading-oferta" class="btn btn-primary" data-i18n="trading.cta.btn1">Umów Sesję</a>
+        <a href="mailto:pawelbesler@gmail.com" class="btn btn-gold-outline" data-i18n="trading.cta.btn2">Napisz do mnie</a>
       </div>
     </div>
   </section>
@@ -322,12 +345,13 @@
         <ul>
           <li><a href="trading.html" data-i18n="nav.trading">Trading</a></li>
           <li><a href="athletes.html" data-i18n="nav.athletes">Sportowcy</a></li>
+          <li><a href="oferta.html" data-i18n="nav.oferta">Oferta</a></li>
         </ul>
       </div>
       <div>
         <h4 data-i18n="footer.contact">Kontakt</h4>
         <ul>
-          <li><a href="mailto:kontakt@besler.pl" data-i18n="footer.email">kontakt@besler.pl</a></li>
+          <li><a href="mailto:pawelbesler@gmail.com" data-i18n="footer.email">pawelbesler@gmail.com</a></li>
         </ul>
       </div>
     </div>

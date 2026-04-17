@@ -47,8 +47,12 @@
     .fx-pinned{height:100vh;width:100%;overflow:hidden;position:relative;background:#0A0A0A;z-index:1}
     .fx-bgs{position:absolute;inset:0;background:#0A0A0A;z-index:1}
     .fx-bg{position:absolute;inset:0}
-    .fx-bg-img{position:absolute;inset:-10% 0 -10% 0;width:100%;height:120%;object-fit:cover;filter:brightness(0.85) saturate(0.9);opacity:0;will-change:transform,opacity}
+    .fx-bg-img{position:absolute;inset:-10% 0 -10% 0;width:100%;height:120%;object-fit:cover;object-position:center center;filter:brightness(0.85) saturate(0.9);opacity:0;will-change:transform,opacity}
+    .fx-bgs .fx-bg:first-child .fx-bg-img{object-position:center 5%;transform:scale(0.8);transform-origin:center 30%}
+    .fx-bgs .fx-bg:nth-child(5) .fx-bg-img{object-position:center 10%;transform:scale(0.85);transform-origin:center 35%}
     .fx-bg-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.18) 0%,rgba(0,12,6,0.32) 50%,rgba(0,0,0,0.5) 100%)}
+    .fx-bgs .fx-bg:first-child .fx-bg-overlay{background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,transparent 40%)}
+    .fx-bgs .fx-bg:nth-child(5) .fx-bg-overlay{background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,transparent 40%)}
     .fx-grid{display:grid;grid-template-rows:auto 1fr auto;position:relative;height:100%;z-index:2;padding:0 2rem}
     .fx-header{align-self:start;padding-top:max(5vh,3rem);font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,7vw,7rem);line-height:.88;text-align:center;color:rgba(245,245,245,0.15);text-transform:uppercase;letter-spacing:.06em;pointer-events:none;user-select:none}
     .fx-header div{display:block}
@@ -86,6 +90,10 @@
       .fx-featured-title{font-size:clamp(2.5rem,14vw,5rem)}
       .fx-header{font-size:clamp(1.6rem,10vw,5rem)}
       .fx-left,.fx-right{display:none}
+      /* Fix background images on mobile — reset scale, fill viewport */
+      .fx-bg-img{inset:0!important;width:100%!important;height:100%!important;object-position:center center!important;transform:none!important;transform-origin:center center!important}
+      .fx-bgs .fx-bg:first-child .fx-bg-img{object-position:center 20%!important}
+      .fx-bgs .fx-bg:nth-child(5) .fx-bg-img{object-position:center 25%!important}
     }
   </style>
 
@@ -117,8 +125,7 @@
     <!-- Grid -->
     <div class="fx-grid">
       <div class="fx-header">
-        <div>Sportowa</div>
-        <div>Droga</div>
+        <div>Moja Droga</div>
       </div>
 
       <div class="fx-content">
@@ -175,8 +182,6 @@
       </div>
 
       <div class="fx-footer">
-        <div class="fx-footer-label">Rugby Klub</div>
-        <div class="fx-footer-title">Lechia Gdańsk</div>
         <div class="fx-progress">
           <div class="fx-progress-numbers">
             <span id="fxCurrentNum">01</span>
@@ -336,9 +341,32 @@
         <h2 data-i18n="athletes.calendar.title">Umów sesję coachingową</h2>
         <p data-i18n="athletes.calendar.subtitle">Wybierz dogodny termin na sesję mentalną online.</p>
       </div>
-      <div class="calendar-placeholder fade-up">
-        <h3 data-i18n="athletes.calendar.placeholder.title">Kalendarz rezerwacji</h3>
-        <p data-i18n="athletes.calendar.placeholder.desc">Tutaj zostanie osadzony system rezerwacji (np. Calendly). Skontaktuj się, aby umówić sesję.</p>
+      <div class="calendar-embed-wrapper fade-up" id="booking-calendar">
+        <div class="calendar-header-bar">
+          <div class="calendar-header-left">
+            <span class="calendar-header-dot" aria-hidden="true"></span>
+            <span class="calendar-header-title" data-i18n="calendar.header.title">Wybierz termin sesji</span>
+          </div>
+          <a class="calendar-header-external" target="_blank" rel="noopener" title="Otwórz w pełnym oknie">
+            <span data-i18n="calendar.header.external">Pełny widok</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+        <div class="calendar-embed-inner">
+          <div class="calendar-loading" data-i18n="calendar.loading">Ładowanie kalendarza rezerwacji...</div>
+          <iframe class="calendar-embed-iframe" title="Booking Calendar" loading="lazy"></iframe>
+          <a class="calendar-fallback btn btn-primary" target="_blank" rel="noopener" data-i18n="calendar.fallback">Kliknij tutaj, aby zarezerwować termin</a>
+        </div>
+      </div>
+      <div class="calendar-direct-cta fade-up">
+        <div class="calendar-direct-cta-text">
+          <strong data-i18n="calendar.direct.title">Wolisz zarezerwować bezpośrednio?</strong>
+          <span data-i18n="calendar.direct.desc">Otwórz pełny kalendarz Google w nowej karcie dla najlepszego doświadczenia.</span>
+        </div>
+        <a class="btn btn-primary calendar-direct-link" target="_blank" rel="noopener">
+          <span data-i18n="calendar.direct.btn">Rezerwuj bezpośrednio</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -349,8 +377,8 @@
       <h2 data-i18n="athletes.cta.title">Gotowy na mentalną przewagę?</h2>
       <p data-i18n="athletes.cta.desc">Umów pierwszą sesję i zacznij rywalizować z pewnością siebie.</p>
       <div class="cta-buttons">
-        <a href="#calendar" class="btn btn-primary" data-i18n="athletes.cta.btn1">Umów Sesję</a>
-        <a href="mailto:kontakt@besler.pl" class="btn btn-gold-outline" data-i18n="athletes.cta.btn2">Napisz do mnie</a>
+        <a href="oferta.html#sport-oferta" class="btn btn-primary" data-i18n="athletes.cta.btn1">Umów Sesję</a>
+        <a href="mailto:pawelbesler@gmail.com" class="btn btn-gold-outline" data-i18n="athletes.cta.btn2">Napisz do mnie</a>
       </div>
     </div>
   </section>
@@ -374,12 +402,13 @@
         <ul>
           <li><a href="trading.html" data-i18n="nav.trading">Trading</a></li>
           <li><a href="athletes.html" data-i18n="nav.athletes">Sportowcy</a></li>
+          <li><a href="oferta.html" data-i18n="nav.oferta">Oferta</a></li>
         </ul>
       </div>
       <div>
         <h4 data-i18n="footer.contact">Kontakt</h4>
         <ul>
-          <li><a href="mailto:kontakt@besler.pl" data-i18n="footer.email">kontakt@besler.pl</a></li>
+          <li><a href="mailto:pawelbesler@gmail.com" data-i18n="footer.email">pawelbesler@gmail.com</a></li>
         </ul>
       </div>
     </div>

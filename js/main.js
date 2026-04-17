@@ -3,6 +3,15 @@
    Main JavaScript
    ============================================ */
 
+// ---- Google Calendar Configuration ----
+const CALENDAR_CONFIG = {
+  apiKey: 'AIzaSyDUG1cFKpQ9ZInKSKHr-AoAY1QXC_zvHGM',                          // Replace with actual API key
+  eventsCalendarId: '4334d29b68a5b61a7a497ee0be1f001105db3566920b1a2909483e25156ccedb@group.calendar.google.com', // Public events calendar ID
+  appointmentUrl: 'https://calendar.app.google/Q2LWiMDXja8AkWW97', // Google Appointment Scheduling URL
+  maxEvents: 5,
+  cacheDurationMs: 300000 // 5 minutes
+};
+
 // ---- Translations ----
 const translations = {
   // === NAVIGATION ===
@@ -11,9 +20,11 @@ const translations = {
   'nav.athletes': { pl: 'Sportowcy', en: 'Athletes' },
   'nav.about': { pl: 'O Mnie', en: 'About' },
   'nav.contact': { pl: 'Kontakt', en: 'Contact' },
+  'nav.oferta': { pl: 'Oferta', en: 'Offer' },
 
   // === INDEX PAGE ===
   'hero.badge': { pl: 'Trener Mentalny & DiNapoli Expert', en: 'Mental Coach & DiNapoli Expert' },
+  'hero.motto': { pl: 'Najlepsza inwestycja to inwestycja w siebie', en: 'The best investment is an investment in yourself' },
   'hero.cta.trading': { pl: 'Trening Mentalny dla Traderów', en: 'Mental Training for Traders' },
   'hero.cta.athletes': { pl: 'Trening Mentalny dla Sportowców', en: 'Mental Training for Athletes' },
 
@@ -144,6 +155,24 @@ const translations = {
     pl: 'Nowe wydarzenia pojawią się wkrótce. Zapisz się do newslettera, aby być na bieżąco.',
     en: 'New events coming soon. Subscribe to the newsletter to stay updated.'
   },
+  'events.loading': { pl: 'Ładowanie wydarzeń...', en: 'Loading events...' },
+  'events.error': {
+    pl: 'Nie udało się załadować wydarzeń. Spróbuj ponownie później.',
+    en: 'Failed to load events. Please try again later.'
+  },
+  'events.empty': {
+    pl: 'Brak nadchodzących wydarzeń. Zapisz się do newslettera, aby być na bieżąco.',
+    en: 'No upcoming events. Subscribe to the newsletter to stay updated.'
+  },
+
+  // Calendar Booking
+  'calendar.loading': { pl: 'Ładowanie kalendarza rezerwacji...', en: 'Loading booking calendar...' },
+  'calendar.fallback': { pl: 'Kliknij tutaj, aby zarezerwować termin', en: 'Click here to book an appointment' },
+  'calendar.header.title': { pl: 'Wybierz termin sesji', en: 'Pick a session time' },
+  'calendar.header.external': { pl: 'Pełny widok', en: 'Full view' },
+  'calendar.direct.title': { pl: 'Wolisz zarezerwować bezpośrednio?', en: 'Prefer to book directly?' },
+  'calendar.direct.desc': { pl: 'Otwórz pełny kalendarz Google w nowej karcie dla najlepszego doświadczenia.', en: 'Open the full Google calendar in a new tab for the best experience.' },
+  'calendar.direct.btn': { pl: 'Rezerwuj bezpośrednio', en: 'Book directly' },
 
   // Partners
   'partners.label': { pl: 'Partnerzy & Zasoby', en: 'Partners & Resources' },
@@ -273,6 +302,88 @@ const translations = {
   'athletes.cta.desc': { pl: 'Umów pierwszą sesję i zacznij rywalizować z pewnością siebie.', en: 'Book your first session and start competing with confidence.' },
   'athletes.cta.btn1': { pl: 'Umów Sesję', en: 'Book a Session' },
   'athletes.cta.btn2': { pl: 'Napisz do mnie', en: 'Contact Me' },
+
+  // === OFERTA PAGE ===
+  'oferta.hero.label': { pl: 'Oferta', en: 'Offer' },
+  'oferta.hero.title': { pl: 'Wybierz swoją <em>ścieżkę rozwoju</em>', en: 'Choose your <em>growth path</em>' },
+  'oferta.hero.subtitle': {
+    pl: 'Indywidualnie dopasowane pakiety treningu mentalnego dla traderów i sportowców. Zainwestuj w swoją mentalną przewagę.',
+    en: 'Individually tailored mental training packages for traders and athletes. Invest in your mental edge.'
+  },
+  'oferta.trading.title': { pl: 'Trening Mentalny dla Traderów', en: 'Mental Training for Traders' },
+  'oferta.trading.subtitle': {
+    pl: 'Opanuj emocje, utrzymaj dyscyplinę i podejmuj trafne decyzje pod presją rynku.',
+    en: 'Master your emotions, maintain discipline, and make accurate decisions under market pressure.'
+  },
+  'oferta.trading.s1.title': { pl: 'Sesja Pojedyncza', en: 'Single Session' },
+  'oferta.trading.s1.desc': {
+    pl: 'Jednorazowa sesja coachingowa online. Idealna na start lub gdy potrzebujesz wsparcia w konkretnej sytuacji rynkowej.',
+    en: 'One-time online coaching session. Ideal for starting out or when you need support in a specific market situation.'
+  },
+  'oferta.trading.s1.f1': { pl: '60 minut sesji online', en: '60-minute online session' },
+  'oferta.trading.s1.f2': { pl: 'Diagnoza mentalnych blokad', en: 'Mental blocks assessment' },
+  'oferta.trading.s1.f3': { pl: 'Techniki do natychmiastowego wdrożenia', en: 'Techniques for immediate implementation' },
+  'oferta.trading.s1.f4': { pl: 'Podsumowanie i plan działania', en: 'Summary and action plan' },
+  'oferta.badge.popular': { pl: 'Najpopularniejsze', en: 'Most Popular' },
+  'oferta.trading.s2.title': { pl: 'Pakiet Mentalny', en: 'Mental Package' },
+  'oferta.trading.s2.desc': {
+    pl: 'Kompleksowy program mentalny dopasowany do Twojego stylu tradingu. Regularne sesje i wsparcie między spotkaniami.',
+    en: 'Comprehensive mental program tailored to your trading style. Regular sessions and support between meetings.'
+  },
+  'oferta.trading.s2.f1': { pl: '4 sesje online (60 min każda)', en: '4 online sessions (60 min each)' },
+  'oferta.trading.s2.f2': { pl: 'Spersonalizowany plan mentalny', en: 'Personalized mental plan' },
+  'oferta.trading.s2.f3': { pl: 'Ćwiczenia i techniki między sesjami', en: 'Exercises and techniques between sessions' },
+  'oferta.trading.s2.f4': { pl: 'Wsparcie mailowe między sesjami', en: 'Email support between sessions' },
+  'oferta.trading.s2.f5': { pl: 'Analiza dziennika tradingowego', en: 'Trading journal analysis' },
+  'oferta.trading.s3.title': { pl: 'E-book: Psychologia Tradingu', en: 'E-book: Trading Psychology' },
+  'oferta.trading.s3.desc': {
+    pl: 'Sprawdzone techniki mentalne w formie e-booka. Dostępny w języku polskim i angielskim.',
+    en: 'Proven mental techniques in e-book form. Available in Polish and English.'
+  },
+  'oferta.trading.s3.f1': { pl: 'Techniki zarządzania emocjami', en: 'Emotion management techniques' },
+  'oferta.trading.s3.f2': { pl: 'Budowanie dyscypliny tradingowej', en: 'Building trading discipline' },
+  'oferta.trading.s3.f3': { pl: 'Ćwiczenia praktyczne', en: 'Practical exercises' },
+  'oferta.trading.s3.f4': { pl: 'Dostępny w PL i EN', en: 'Available in PL and EN' },
+  'oferta.sport.title': { pl: 'Trening Mentalny dla Sportowców', en: 'Mental Training for Athletes' },
+  'oferta.sport.subtitle': {
+    pl: 'Rozwijaj siłę mentalną potrzebną do rywalizacji na najwyższym poziomie.',
+    en: 'Develop the mental strength needed to compete at the highest level.'
+  },
+  'oferta.sport.s1.title': { pl: 'Sesja Pojedyncza', en: 'Single Session' },
+  'oferta.sport.s1.desc': {
+    pl: 'Jednorazowa sesja mentalnego coachingu. Wsparcie przed ważnymi zawodami lub w trudnym momencie kariery.',
+    en: 'One-time mental coaching session. Support before important competitions or during difficult career moments.'
+  },
+  'oferta.sport.s1.f1': { pl: '60 minut sesji online', en: '60-minute online session' },
+  'oferta.sport.s1.f2': { pl: 'Analiza mentalnych barier', en: 'Mental barriers analysis' },
+  'oferta.sport.s1.f3': { pl: 'Techniki radzenia sobie z presją', en: 'Pressure management techniques' },
+  'oferta.sport.s1.f4': { pl: 'Plan działania po sesji', en: 'Post-session action plan' },
+  'oferta.sport.s2.title': { pl: 'Pakiet Sportowy', en: 'Sports Package' },
+  'oferta.sport.s2.desc': {
+    pl: 'Kompleksowy program mentalny dla sportowców. Regularny trening mentalny jako element Twojego planu treningowego.',
+    en: 'Comprehensive mental program for athletes. Regular mental training as part of your training plan.'
+  },
+  'oferta.sport.s2.f1': { pl: '4 sesje online (60 min każda)', en: '4 online sessions (60 min each)' },
+  'oferta.sport.s2.f2': { pl: 'Indywidualna strategia mentalna', en: 'Individual mental strategy' },
+  'oferta.sport.s2.f3': { pl: 'Ćwiczenia wizualizacji i koncentracji', en: 'Visualization and focus exercises' },
+  'oferta.sport.s2.f4': { pl: 'Wsparcie między sesjami', en: 'Support between sessions' },
+  'oferta.sport.s2.f5': { pl: 'Techniki przed-startowe', en: 'Pre-competition techniques' },
+  'oferta.sport.s3.title': { pl: 'Coaching Drużynowy', en: 'Team Coaching' },
+  'oferta.sport.s3.desc': {
+    pl: 'Trening mentalny dla całego zespołu. Budowanie spójności, komunikacji i mentalnej odporności grupy.',
+    en: 'Mental training for the entire team. Building cohesion, communication, and group mental resilience.'
+  },
+  'oferta.sport.s3.f1': { pl: 'Sesje grupowe dla drużyny', en: 'Group sessions for the team' },
+  'oferta.sport.s3.f2': { pl: 'Budowanie dynamiki zespołu', en: 'Building team dynamics' },
+  'oferta.sport.s3.f3': { pl: 'Techniki komunikacji sportowej', en: 'Sports communication techniques' },
+  'oferta.sport.s3.f4': { pl: 'Program dopasowany do sezonu', en: 'Program tailored to the season' },
+  'oferta.cta.book': { pl: 'Umów sesję', en: 'Book a Session' },
+  'oferta.cta.ebook': { pl: 'Zobacz e-book', en: 'View E-book' },
+  'oferta.cta.contact': { pl: 'Skontaktuj się', en: 'Get in Touch' },
+  'oferta.cta.title': { pl: 'Nie wiesz, co wybrać?', en: 'Not sure what to choose?' },
+  'oferta.cta.desc': { pl: 'Napisz do mnie — pomogę dobrać najlepszą opcję dopasowaną do Twoich potrzeb.', en: 'Write to me — I\'ll help you find the best option for your needs.' },
+  'oferta.cta.btn1': { pl: 'Napisz do mnie', en: 'Contact Me' },
+  'oferta.cta.btn2': { pl: 'Poznaj mnie', en: 'About Me' },
 };
 
 // ---- Language System ----
@@ -298,6 +409,15 @@ function setLanguage(lang) {
   });
 
   document.documentElement.lang = lang;
+
+  // Re-render dynamically loaded events in the new language
+  var eventsContainer = document.getElementById('events-list');
+  if (eventsContainer) {
+    var cached = sessionStorage.getItem('besler-events-cache');
+    if (cached) {
+      renderEvents(JSON.parse(cached), eventsContainer);
+    }
+  }
 }
 
 // ---- Mobile Navigation ----
@@ -406,7 +526,20 @@ function initOrbitalTimeline() {
     return 200;
   }
 
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
   function updatePositions() {
+    if (isMobile()) {
+      // On mobile, CSS handles the vertical timeline layout
+      nodes.forEach((node) => {
+        node.style.transform = '';
+        node.style.zIndex = '';
+        node.style.opacity = '';
+      });
+      return;
+    }
     const radius = getRadius();
     nodes.forEach((node, index) => {
       const angle = ((index / total) * 360 + rotationAngle) % 360;
@@ -465,9 +598,9 @@ function initOrbitalTimeline() {
     }
   });
 
-  // Auto-rotation
+  // Auto-rotation (desktop only)
   setInterval(() => {
-    if (autoRotate) {
+    if (autoRotate && !isMobile()) {
       rotationAngle = (rotationAngle + 0.3) % 360;
       updatePositions();
     }
@@ -513,8 +646,7 @@ function initZoomParallax() {
   const container = document.querySelector('.zoom-parallax-container');
   if (!container) return;
 
-  const items = container.querySelectorAll('.zp-item');
-  // Scale targets matching the React component: 4, 5, 6, 5, 6, 8, 9
+  const items = Array.from(container.querySelectorAll('.zp-item'));
   const scaleTargets = [4, 5, 6, 5, 6, 8, 9];
 
   function update() {
@@ -524,6 +656,7 @@ function initZoomParallax() {
     const progress = Math.max(0, Math.min(1, scrolled / total));
 
     items.forEach((item, i) => {
+      if (!item) return;
       const target = scaleTargets[i % scaleTargets.length];
       const scale = 1 + progress * (target - 1);
       item.style.transform = 'scale(' + scale + ')';
@@ -532,6 +665,154 @@ function initZoomParallax() {
 
   window.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
   update();
+}
+
+// ---- Events Calendar (Google Calendar API) ----
+function initEventsCalendar() {
+  const container = document.getElementById('events-list');
+  if (!container) return;
+
+  const cacheKey = 'besler-events-cache';
+  const cacheTimeKey = 'besler-events-cache-time';
+
+  // Check sessionStorage cache
+  const cached = sessionStorage.getItem(cacheKey);
+  const cachedTime = sessionStorage.getItem(cacheTimeKey);
+  if (cached && cachedTime && (Date.now() - parseInt(cachedTime)) < CALENDAR_CONFIG.cacheDurationMs) {
+    renderEvents(JSON.parse(cached), container);
+    return;
+  }
+
+  // Fetch from Google Calendar API
+  const now = new Date().toISOString();
+  const url = 'https://www.googleapis.com/calendar/v3/calendars/'
+    + encodeURIComponent(CALENDAR_CONFIG.eventsCalendarId)
+    + '/events?key=' + CALENDAR_CONFIG.apiKey
+    + '&timeMin=' + now
+    + '&maxResults=' + CALENDAR_CONFIG.maxEvents
+    + '&singleEvents=true&orderBy=startTime';
+
+  fetch(url)
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(function(data) {
+      var events = (data.items || []).map(function(item) {
+        return {
+          title: item.summary || '',
+          description: item.description || '',
+          location: item.location || '',
+          start: (item.start && (item.start.dateTime || item.start.date)) || '',
+          end: (item.end && (item.end.dateTime || item.end.date)) || '',
+          htmlLink: item.htmlLink || ''
+        };
+      });
+
+      sessionStorage.setItem(cacheKey, JSON.stringify(events));
+      sessionStorage.setItem(cacheTimeKey, Date.now().toString());
+      renderEvents(events, container);
+    })
+    .catch(function(err) {
+      console.error('Events fetch error:', err);
+      var msg = (translations['events.error'] && translations['events.error'][currentLang]) || 'Failed to load events.';
+      container.innerHTML = '<div class="events-placeholder">' + msg + '</div>';
+    });
+}
+
+function renderEvents(events, container) {
+  if (!events.length) {
+    var msg = (translations['events.empty'] && translations['events.empty'][currentLang])
+      || 'No upcoming events.';
+    container.innerHTML = '<div class="events-placeholder">' + msg + '</div>';
+    return;
+  }
+
+  var monthNamesPl = ['STY','LUT','MAR','KWI','MAJ','CZE','LIP','SIE','WRZ','PAŹ','LIS','GRU'];
+  var monthNamesEn = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+  container.innerHTML = events.map(function(ev) {
+    var date = new Date(ev.start);
+    var months = currentLang === 'pl' ? monthNamesPl : monthNamesEn;
+    var month = months[date.getMonth()];
+    var day = date.getDate();
+    var time = date.toLocaleTimeString(currentLang === 'pl' ? 'pl-PL' : 'en-US', {
+      hour: '2-digit', minute: '2-digit'
+    });
+
+    var meta = '<span class="event-time">' + time + '</span>';
+    if (ev.location) {
+      meta += '<span class="event-location">' + ev.location + '</span>';
+    }
+
+    return '<a href="' + ev.htmlLink + '" target="_blank" rel="noopener" class="event-item">'
+      + '<div class="event-date">'
+      + '<div class="month">' + month + '</div>'
+      + '<div class="day">' + day + '</div>'
+      + '</div>'
+      + '<div class="event-info">'
+      + '<h4>' + ev.title + '</h4>'
+      + '<p>' + meta + '</p>'
+      + '</div>'
+      + '</a>';
+  }).join('');
+}
+
+// ---- Booking Calendar (Google Appointment Scheduling) ----
+function initBookingCalendar() {
+  var wrapper = document.getElementById('booking-calendar');
+  if (!wrapper) return;
+
+  var iframe = wrapper.querySelector('.calendar-embed-iframe');
+  var loading = wrapper.querySelector('.calendar-loading');
+  var fallback = wrapper.querySelector('.calendar-fallback');
+  var headerLink = wrapper.querySelector('.calendar-header-external');
+  // Direct CTA lives as a sibling of the wrapper inside the section container
+  var section = wrapper.closest('.section');
+  var directLink = section ? section.querySelector('.calendar-direct-link') : null;
+
+  if (!CALENDAR_CONFIG.appointmentUrl || CALENDAR_CONFIG.appointmentUrl.indexOf('YOUR_') !== -1) {
+    if (loading) {
+      var msg = (translations['calendar.fallback'] && translations['calendar.fallback'][currentLang]) || 'Contact me to book.';
+      loading.textContent = msg;
+      loading.classList.add('calendar-not-configured');
+    }
+    if (iframe) iframe.style.display = 'none';
+    return;
+  }
+
+  // Point all external links at the booking URL
+  if (headerLink) headerLink.href = CALENDAR_CONFIG.appointmentUrl;
+  if (directLink) directLink.href = CALENDAR_CONFIG.appointmentUrl;
+  if (fallback) fallback.href = CALENDAR_CONFIG.appointmentUrl;
+
+  // Google Appointment Scheduling (calendar.app.google / calendar.google.com)
+  // refuses iframe embedding via X-Frame-Options / CSP frame-ancestors.
+  // Skip the iframe and surface the booking CTA inline instead.
+  var url = CALENDAR_CONFIG.appointmentUrl;
+  var blocksEmbedding = /(^https?:\/\/)?(calendar\.app\.google|calendar\.google\.com)/i.test(url);
+
+  if (blocksEmbedding) {
+    if (iframe) iframe.style.display = 'none';
+    if (loading) loading.style.display = 'none';
+    if (fallback) fallback.style.display = 'inline-flex';
+    return;
+  }
+
+  iframe.src = url;
+
+  iframe.addEventListener('load', function() {
+    if (loading) loading.style.display = 'none';
+    iframe.classList.add('loaded');
+  });
+
+  setTimeout(function() {
+    if (!iframe.classList.contains('loaded')) {
+      if (loading) loading.style.display = 'none';
+      iframe.style.display = 'none';
+      if (fallback) fallback.style.display = 'inline-flex';
+    }
+  }, 10000);
 }
 
 // ---- Initialize Everything ----
@@ -543,6 +824,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initNewsletter();
   initSmoothScroll();
+
+  // Calendar integrations
+  initEventsCalendar();
+  initBookingCalendar();
 
   // New component initializers
   initOrbitalTimeline();
